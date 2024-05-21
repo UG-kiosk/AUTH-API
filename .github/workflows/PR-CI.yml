@@ -1,0 +1,66 @@
+name: PR-CI
+
+on:
+    pull_request:
+        branches: '**'
+
+jobs:
+    install-dependencies:
+        runs-on: ubuntu-latest
+        container: node:20-alpine
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Tar node_modules directory
+              run: tar czf node_modules.tar.gz -C node_modules .
+
+            - name: Upload node_modules_artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: node_modules
+                  path: node_modules.tar.gz
+
+    verify-code-formatting:
+        needs: install-dependencies
+        runs-on: ubuntu-latest
+        container:
+            image: node:20-alpine
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Download node_modules artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: node_modules
+
+            - name: Extract node_modules
+              run: mkdir node_modules && tar xzf node_modules.tar.gz -C ./node_modules
+
+            - name: test prettier
+              run: yarn prettier:ci
+
+            - name: test eslint
+              run: yarn lint:ci
+    build:
+        needs: [install-dependencies, verify-code-formatting]
+        runs-on: ubuntu-latest
+        container: node:21-alpine
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Download node_modules artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: node_modules
+
+            - name: Extract node_modules
+              run: mkdir node_modules && tar xzf node_modules.tar.gz -C ./node_modules
+
+            - name: build
+              run: yarn build

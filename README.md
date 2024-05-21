@@ -8,7 +8,7 @@ Authorization service
 
 AUTH-API-KIOSK uses:
 
-- [Typescript](https://www.typescriptlang.org/)
+-   [Typescript](https://www.typescriptlang.org/)
 
 ---
 
