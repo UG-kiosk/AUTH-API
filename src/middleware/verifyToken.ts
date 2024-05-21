@@ -54,11 +54,6 @@ export const verifyToken = (
             },
         );
 
-        res.clearCookie('jwt', {
-            httpOnly: true,
-            // secure: true, // for https
-            sameSite: 'none',
-        });
         res.cookie('jwt', rotateRefreshToken, {
             httpOnly: true,
             // secure: true, // for https
