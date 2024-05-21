@@ -39,6 +39,7 @@ export const verifyToken = (
         );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     jwt.verify(token, jwt_secret, (error: any, decoded: any) => {
         if (error) {
             return res.status(401).send({ message: 'Unauthorized' });
@@ -53,11 +54,6 @@ export const verifyToken = (
             },
         );
 
-        res.clearCookie('jwt', {
-            httpOnly: true,
-            // secure: true, // for https
-            sameSite: 'none',
-        });
         res.cookie('jwt', rotateRefreshToken, {
             httpOnly: true,
             // secure: true, // for https

@@ -8,7 +8,8 @@ import { User } from '../models/user.model';
 dotenv.config();
 
 export const register = async (req: Request, res: Response) => {
-    let { username, email, password } = req.body;
+    const { username, email } = req.body;
+    let { password } = req.body;
 
     try {
         const salt = await bcrypt.genSalt(10);
@@ -20,7 +21,7 @@ export const register = async (req: Request, res: Response) => {
             password,
         });
 
-        const savedUser = await user.save();
+        await user.save();
         res.send({ message: 'User registered' });
     } catch (error) {
         if (error instanceof MongoError && error.code === 11000) {
@@ -34,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-    let { email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
         const user = await User.findOne({ email });
@@ -102,6 +103,7 @@ export const refreshToken = async (req: Request, res: Response) => {
         );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     jwt.verify(cookies.jwt, jwt_secret, async (error: any, decoded: any) => {
         try {
             if (error) {

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "main": "index.js",
     "repository": "git@github.com:UG-kiosk/AUTH-API-KIOSK.git",
-    "author": "justyna <towarnickaj@gmail.com>",
+    "author": "jtowarnicka",
     "license": "MIT",
     "scripts": {
         "start": "NODE_ENV=production node dist/index.js",
@@ -20,12 +20,15 @@
         "exec": "ts-node src/index.ts"
     },
     "dependencies": {
+        "@typescript-eslint/eslint-plugin": "^7.10.0",
         "axios": "^1.6.8",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
-        "eslint": "^9.3.0",
+        "eslint": "^8.56.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.1.3",
         "express": "^4.19.2",
         "jsonwebtoken": "^9.0.2",
         "lodash": "^4.17.21",
@@ -47,6 +50,7 @@
         "@types/morgan": "^1.9.9",
         "@types/node": "^20.12.12",
         "@types/validator": "^13.11.10",
+        "@typescript-eslint/parser": "^7.10.0",
         "nodemon": "^3.1.0"
     }
 }
