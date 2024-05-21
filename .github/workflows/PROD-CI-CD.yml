@@ -8,7 +8,7 @@ on:
 jobs:
     install-dependencies:
         runs-on: ubuntu-latest
-        container: node:21-alpine
+        container: node:20-alpine
 
         steps:
             - uses: actions/checkout@v4
@@ -30,8 +30,8 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            image_tag: ${{vars.DOCKER_IMAGE_OWNER}}/kiosk-auth-prod:${GITHUB_SHA}
-            image_latest: ${{vars.DOCKER_IMAGE_OWNER}}/kiosk-auth-prod:latest
+            image_tag: ${{vars.DOCKER_IMAGE_OWNER}}/kiosk-auth-api-prod:${GITHUB_SHA}
+            image_latest: ${{vars.DOCKER_IMAGE_OWNER}}/kiosk-auth-api-prod:latest
 
         steps:
             - uses: actions/checkout@v4
@@ -51,13 +51,3 @@ jobs:
               run: |
                   docker push ${{ env.image_tag }}
                   docker push ${{ env.image_latest }}
-
-    deploy:
-        needs: [release]
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Trigger deploy
-              run: curl --request POST '${{ secrets.DEPLOY_AUTH_PROD_WEBHOOK }}'
