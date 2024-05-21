@@ -47,7 +47,7 @@ jobs:
             - name: test eslint
               run: yarn lint:ci
     build:
-        needs: [install-dependencies]
+        needs: [install-dependencies, verify-code-formatting]
         runs-on: ubuntu-latest
         container: node:21-alpine
 
