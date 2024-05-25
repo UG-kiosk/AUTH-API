@@ -78,9 +78,9 @@ export const login = async (req: Request, res: Response) => {
 
         res.cookie('jwt', refreshToken, {
             httpOnly: true,
-            // secure: true, // for https
+            secure: true,
             sameSite: 'none',
-            maxAge: 3600000, // 1 hour
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
         });
 
         res.status(200).send({ accessToken });
@@ -145,7 +145,7 @@ export const logout = (req: Request, res: Response) => {
     }
     res.clearCookie('jwt', {
         httpOnly: true,
-        // secure: true, // for https
+        secure: true,
         sameSite: 'none',
     });
 
