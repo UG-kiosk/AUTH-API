@@ -56,8 +56,9 @@ export const verifyToken = (
 
         res.cookie('jwt', rotateRefreshToken, {
             httpOnly: true,
-            // secure: true, // for https
+            secure: true,
             sameSite: 'none',
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
         });
 
         next();
