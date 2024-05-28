@@ -66,7 +66,7 @@ jobs:
               run: yarn build
 
     release:
-        needs: [run-unit-tests]
+        needs: [build]
         runs-on: ubuntu-latest
 
         env:
