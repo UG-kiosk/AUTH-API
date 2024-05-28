@@ -21,6 +21,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/api', authRouter);
+app.use('/kiosk-auth-api/api', authRouter);
 
 export { app };
